@@ -91,20 +91,21 @@ void writeVtkOutputFlags(const double * const collideField, const int * const fl
         return;
     }
 
-    write_vtkHeader( fp, xlength);
-    write_vtkPointCoordinates(fp, xlength, xlength, xlength);
+    write_vtkHeader( fp, xlength+1);
+    write_vtkPointCoordinates(fp, xlength+1, xlength+1, xlength+1);
 
-    fprintf(fp,"CELL_DATA %i \n", (xlength+2)*(xlength+2)*(xlength+2));
 
     fprintf(fp,"\n");
+    fprintf(fp,"CELL_DATA %i \n", ((xlength+2)*(xlength+2)*(xlength+2)) );
     fprintf(fp, "SCALARS pressure float 1 \n");
+    fprintf(fp, "LOOKUP_TABLE default \n");
     for(int x=0;x<=xlength+1;x++){
         for(int y=0;y<=xlength+1;y++){
             for(int z=0;z<=xlength+1;z++){
-                fprintf(fp, "%i \n", flagField[z*totalLengthSq +y*totalLength +x]);
+                fprintf(fp, "%f\n",(float)flagField[z*totalLengthSq+y*totalLength+x]);
             }
         }
-    }
+    }  
     if(fclose(fp)){
         char szBuff[80];
         sprintf( szBuff, "Failed to close %s", szFileName );
