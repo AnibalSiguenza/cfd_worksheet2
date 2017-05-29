@@ -6,17 +6,17 @@ xlength     5
 #--------------------------------------------
 #               relaxation parameter
 #--------------------------------------------
-tau     .8
+tau     .5
 
 #--------------------------------------------
 #       characteristic velocity
 #--------------------------------------------
-velocityWallx    .005
+velocityWallx    0.001
 velocityWally    0
 velocityWallz    0
 
 #--------------------------------------------
 #               time steps
 #--------------------------------------------
-timesteps       200
-timestepsPerPlotting        50
+timesteps       10
+timestepsPerPlotting        1
