@@ -27,7 +27,7 @@ void setBoundaryCell(double *collideField, const int* const flagField, const dou
             if(flagField[currentCell]==1){
                 collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i];
             }else{
-                computeDensity(collideField+Q*currentCell, &density);
+                computeDensity(collideField+Q*neighborCell, &density);
                 collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i]\
                                               +2*LATTICEWEIGHTS[i]*density*C_S_INVSQR*dot_product_int(&LATTICEVELOCITIES[i][0],wallVelocity,3);
             }
@@ -42,7 +42,7 @@ void setBoundaryCell(double *collideField, const int* const flagField, const dou
             if(flagField[currentCell]==1){
                 collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i];
             }else{
-                computeDensity(collideField+Q*currentCell, &density);
+                computeDensity(collideField+Q*neighborCell, &density);
                 collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i]\
                                               +2*LATTICEWEIGHTS[i]*density*C_S_INVSQR*dot_product_int(&LATTICEVELOCITIES[i][0],wallVelocity,3);
             }
