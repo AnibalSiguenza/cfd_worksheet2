@@ -23,14 +23,15 @@ void setBoundaryCell(double *collideField, const int* const flagField, const dou
         int y_neighbor=y+LATTICEVELOCITIES[i][1];
         int z_neighbor=z+LATTICEVELOCITIES[i][2];
         int neighborCell=z_neighbor*totalLengthSq+y_neighbor*totalLength+x_neighbor;
-        if(fluidNeighbor(x_neighbor, y_neighbor, z_neighbor, flagField, xMax, xlength, totalLengthSq)){
-            if(flagField[currentCell]==1){
-                collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i];
-            }else{
-                density=0;
-                computeDensity(collideField+Q*neighborCell, &density);
-                collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i]\
-                                              +2*LATTICEWEIGHTS[i]*density*C_S_INVSQR*dot_product_int(&LATTICEVELOCITIES[i][0],wallVelocity,3);
+        if(x_neighbor >= 0 && x_neighbor <= xMax && y_neighbor >= 0 && y_neighbor <= xMax && z_neighbor >= 0 && z_neighbor <= xMax && flagField[neighborCell] == 0){
+            if(flagField[currentCell] == 1){
+                collideField[Q*currentCell + i] = collideField[Q*currentCell + 18 - i];
+            } else if(flagField[currentCell == 2]) {
+                int c_dot_u = 0;
+                for(int k = 0; k < D; k++)
+                    c_dot_u += wallVelocity[k]*LATTICEVELOCITIES[i][k];
+                computeDensity(&collideField[Q*neighborCell], &density);
+                collideField[Q*currentCell + i] = collideField[Q*currentCell + 18 - i] + 2*LATTICEWEIGHTS[i]*density*c_dot_u / C_S_INVSQR; 
             }
         }
     }
@@ -39,14 +40,15 @@ void setBoundaryCell(double *collideField, const int* const flagField, const dou
         int y_neighbor=y+LATTICEVELOCITIES[i][1];
         int z_neighbor=z+LATTICEVELOCITIES[i][2];
         int neighborCell=z_neighbor*totalLengthSq+y_neighbor*totalLength+x_neighbor;
-        if(fluidNeighbor(x_neighbor, y_neighbor, z_neighbor, flagField, xMax, xlength, totalLengthSq)){
-            if(flagField[currentCell]==1){
-                collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i];
-            }else{
-                density=0;
-                computeDensity(collideField+Q*neighborCell, &density);
-                collideField[Q*currentCell+i]=collideField[Q*neighborCell+18-i]\
-                                              +2*LATTICEWEIGHTS[i]*density*C_S_INVSQR*dot_product_int(&LATTICEVELOCITIES[i][0],wallVelocity,3);
+        if(x_neighbor >= 0 && x_neighbor <= xMax && y_neighbor >= 0 && y_neighbor <= xMax && z_neighbor >= 0 && z_neighbor <= xMax && flagField[neighborCell] == 0){
+            if(flagField[currentCell] == 1){
+                collideField[Q*currentCell + i] = collideField[Q*currentCell + 18 - i];
+            } else if(flagField[currentCell == 2]) {
+                int c_dot_u = 0;
+                for(int k = 0; k < D; k++)
+                    c_dot_u += wallVelocity[k]*LATTICEVELOCITIES[i][k];
+                computeDensity(&collideField[Q*neighborCell], &density);
+                collideField[Q*currentCell + i] = collideField[Q*currentCell + 18 - i] + 2*LATTICEWEIGHTS[i]*density*c_dot_u / C_S_INVSQR; 
             }
         }
     }
